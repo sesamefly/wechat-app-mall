@@ -4,11 +4,11 @@ const CONFIG = require('../../config.js')
 var app = getApp();
 Page({
   data: {
-    banners:[],
+    banners: [],
     swiperMaxNumber: 0,
     swiperCurrent: 0
   },
-  onLoad:function(){
+  onLoad: function () {
     const _this = this
     wx.setNavigationBarTitle({
       title: wx.getStorageSync('mallName')
@@ -40,8 +40,8 @@ Page({
       })
     }
   },
-  onShow:function(){
-    
+  onShow: function (e) {
+
   },
   swiperchange: function (e) {
     //console.log(e.detail.current)
@@ -65,7 +65,7 @@ Page({
       })
     }
   },
-  imgClick(){
+  imgClick() {
     if (this.data.swiperCurrent + 1 != this.data.swiperMaxNumber) {
       wx.showToast({
         title: '左滑进入',

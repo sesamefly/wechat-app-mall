@@ -2,7 +2,7 @@ const WXAPI = require('apifm-wxapi')
 const CONFIG = require('config.js')
 const AUTH = require('utils/auth')
 App({
-  onLaunch: function() {
+  onLaunch: function () {
     WXAPI.init(CONFIG.subDomain) // 从根目录的 config.js 文件中读取
     const that = this;
     // 检测新版本
@@ -40,14 +40,14 @@ App({
      * 监听网络状态变化
      * 可根据业务需求进行调整
      */
-    wx.onNetworkStatusChange(function(res) {
+    wx.onNetworkStatusChange(function (res) {
       if (!res.isConnected) {
         that.globalData.isConnected = false
         wx.showToast({
           title: '网络已断开',
           icon: 'loading',
           duration: 2000,
-          complete: function() {
+          complete: function () {
             that.goStartIndexPage()
           }
         })
@@ -61,7 +61,7 @@ App({
       that.globalData.vipLevel = res.data
     })
     //  获取商城名称
-    WXAPI.queryConfigBatch('mallName,recharge_amount_min,WITHDRAW_MIN,ALLOW_SELF_COLLECTION,RECHARGE_OPEN').then(function(res) {
+    WXAPI.queryConfigBatch('mallName,recharge_amount_min,WITHDRAW_MIN,ALLOW_SELF_COLLECTION,RECHARGE_OPEN').then(function (res) {
       if (res.code == 0) {
         res.data.forEach(config => {
           wx.setStorageSync(config.key, config.value);
@@ -69,25 +69,25 @@ App({
             that.globalData.recharge_amount_min = config.value;
           }
         })
-        
+
       }
     })
     WXAPI.scoreRules({
       code: 'goodReputation'
-    }).then(function(res) {
-      if (res.code == 0) {        
+    }).then(function (res) {
+      if (res.code == 0) {
         that.globalData.order_reputation_score = res.data[0].score;
       }
     })
   },
-  goStartIndexPage: function() {
-    setTimeout(function() {
+  goStartIndexPage: function () {
+    setTimeout(function () {
       wx.redirectTo({
         url: "/pages/start/start"
       })
     }, 1000)
-  },  
-  onShow (e) {
+  },
+  onShow(e) {
     this.globalData.launchOption = e
     // 保存邀请人
     if (e && e.query && e.query.inviter_id) {
@@ -119,7 +119,7 @@ App({
       }
     })
   },
-  globalData: {                
+  globalData: {
     isConnected: true,
     launchOption: undefined,
     vipLevel: 0
